@@ -44,23 +44,37 @@ export default function App() {
         </div>
 
         <div className="p-6 md:p-8">
-          <AnimatePresence initial={false} mode="wait">
+      <AnimatePresence initial={false} mode="wait">
             {mode === 'login' ? (
-              <LoginForm 
-                key="login" 
-                loginType={loginType}
-                setLoginType={setLoginType}
-                showPassword={showPassword}
-                setShowPassword={setShowPassword}
-                onSwitch={() => setMode('register')}
-              />
+              <motion.div 
+                key="login"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.1 }}
+              >
+                <LoginForm 
+                  loginType={loginType}
+                  setLoginType={setLoginType}
+                  showPassword={showPassword}
+                  setShowPassword={setShowPassword}
+                  onSwitch={() => setMode('register')}
+                />
+              </motion.div>
             ) : (
-              <RegisterForm 
+              <motion.div 
                 key="register"
-                showPassword={showPassword}
-                setShowPassword={setShowPassword}
-                onSwitch={() => setMode('login')}
-              />
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.1 }}
+              >
+                <RegisterForm 
+                  showPassword={showPassword}
+                  setShowPassword={setShowPassword}
+                  onSwitch={() => setMode('login')}
+                />
+              </motion.div>
             )}
           </AnimatePresence>
 
@@ -90,19 +104,21 @@ export default function App() {
   );
 }
 
+interface LoginFormProps {
+  loginType: 'email' | 'phone';
+  setLoginType: (t: 'email' | 'phone') => void;
+  showPassword: boolean;
+  setShowPassword: (s: boolean) => void;
+  onSwitch: () => void;
+}
+
 function LoginForm({ 
   loginType, 
   setLoginType, 
   showPassword, 
   setShowPassword, 
   onSwitch 
-}: { 
-  loginType: 'email' | 'phone', 
-  setLoginType: (t: 'email' | 'phone') => void,
-  showPassword: boolean,
-  setShowPassword: (s: boolean) => void,
-  onSwitch: () => void
-}) {
+}: LoginFormProps) {
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -152,13 +168,7 @@ function LoginForm({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.1 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6">
       <div className="flex items-center gap-2 text-[13px]">
         <span className="text-text-muted">New user?</span>
         <button onClick={onSwitch} className="text-primary-blue font-bold hover:brightness-125 transition-all">Registration</button>
@@ -245,19 +255,21 @@ function LoginForm({
       >
         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Log In'}
       </button>
-    </motion.div>
+    </div>
   );
+}
+
+interface RegisterFormProps {
+  showPassword: boolean;
+  setShowPassword: (s: boolean) => void;
+  onSwitch: () => void;
 }
 
 function RegisterForm({ 
   showPassword, 
   setShowPassword, 
   onSwitch 
-}: { 
-  showPassword: boolean,
-  setShowPassword: (s: boolean) => void,
-  onSwitch: () => void
-}) {
+}: RegisterFormProps) {
   const [agreed, setAgreed] = useState(false);
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -308,13 +320,7 @@ function RegisterForm({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.1 }}
-      className="space-y-6"
-    >
+    <div className="space-y-6">
       <div className="flex items-center gap-2 text-[13px]">
         <span className="text-text-muted">Have an account?</span>
         <button onClick={onSwitch} className="text-primary-blue font-bold hover:brightness-125 transition-all">Log In</button>
@@ -416,7 +422,7 @@ function RegisterForm({
       >
         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Registration'}
       </button>
-    </motion.div>
+    </div>
   );
 }
 
