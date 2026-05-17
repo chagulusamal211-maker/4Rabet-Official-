@@ -1,0 +1,8 @@
+{
+  "name": "NovaBet Auth",
+  "description": "A high-fidelity login and registration interface inspired by modern betting platforms.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
