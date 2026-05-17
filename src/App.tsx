@@ -30,19 +30,19 @@ export default function App() {
       >
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-border-dark">
-          <button className="text-text-muted hover:text-white transition-colors">
+          <button className="text-text-muted hover:text-white transition-colors duration-150">
             <MessageCircle className="w-6 h-6" />
           </button>
           <h2 className="text-lg font-bold tracking-wider text-white">
             {mode === 'login' ? 'LOG IN' : 'REGISTRATION'}
           </h2>
-          <button className="bg-white/5 p-1 rounded-sm text-text-muted hover:text-white transition-colors">
+          <button className="bg-white/5 p-1 rounded-sm text-text-muted hover:text-white transition-colors duration-150">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <div className="p-6">
-          <AnimatePresence mode="wait">
+          <AnimatePresence>
             {mode === 'login' ? (
               <LoginForm 
                 key="login" 
@@ -70,7 +70,7 @@ export default function App() {
               <div className="flex-grow border-t border-border-dark"></div>
             </div>
 
-            <button className="w-full bg-primary-blue hover:bg-primary-hover text-white py-3.5 rounded-lg font-bold flex items-center justify-center gap-3 transition-all">
+            <button className="w-full bg-primary-blue hover:bg-primary-hover text-white py-3.5 rounded-lg font-bold flex items-center justify-center gap-3 transition-all duration-150 active:scale-95">
               <div className="bg-white p-1 rounded-full">
                 <svg width="18" height="18" viewBox="0 0 24 24">
                   <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
@@ -108,9 +108,10 @@ function LoginForm({
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 20 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.05 }}
       className="space-y-6"
     >
       <div className="flex items-center gap-2 text-sm">
@@ -122,14 +123,14 @@ function LoginForm({
       <div className="flex bg-input-bg p-1 rounded-lg">
         <button 
           onClick={() => setLoginType('email')}
-          className={`flex-1 py-3 rounded-md flex items-center justify-center gap-2 transition-all font-bold ${loginType === 'email' ? 'bg-[#22334e] text-white' : 'text-text-muted hover:text-white'}`}
+          className={`flex-1 py-3 rounded-md flex items-center justify-center gap-2 transition-all duration-75 font-bold ${loginType === 'email' ? 'bg-primary-blue text-white shadow-lg' : 'text-text-muted hover:text-white'}`}
         >
           <Mail className="w-4 h-4" />
           Email or ID
         </button>
         <button 
           onClick={() => setLoginType('phone')}
-          className={`flex-1 py-3 rounded-md flex items-center justify-center gap-2 transition-all font-bold ${loginType === 'phone' ? 'bg-primary-blue text-white shadow-lg' : 'text-text-muted hover:text-white'}`}
+          className={`flex-1 py-3 rounded-md flex items-center justify-center gap-2 transition-all duration-75 font-bold ${loginType === 'phone' ? 'bg-primary-blue text-white shadow-lg' : 'text-text-muted hover:text-white'}`}
         >
           <Smartphone className="w-4 h-4" />
           Phone
@@ -189,7 +190,7 @@ function LoginForm({
       </div>
 
       <button 
-        className={`w-full py-4 rounded-lg font-bold uppercase tracking-widest text-sm transition-all duration-300 ${
+        className={`w-full py-4 rounded-lg font-bold uppercase tracking-widest text-sm transition-all duration-150 ${
           isActive 
             ? 'bg-primary-blue text-white shadow-lg shadow-primary-blue/20 cursor-pointer hover:bg-primary-hover active:scale-95' 
             : 'bg-[#1e2c41] text-gray-400 cursor-not-allowed'
@@ -218,9 +219,10 @@ function RegisterForm({
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.05 }}
       className="space-y-6"
     >
       <div className="flex items-center gap-2 text-sm">
@@ -301,7 +303,7 @@ function RegisterForm({
       </div>
 
       <button 
-        className={`w-full py-4 rounded-lg font-bold uppercase tracking-widest text-sm transition-all duration-300 ${
+        className={`w-full py-4 rounded-lg font-bold uppercase tracking-widest text-sm transition-all duration-150 ${
           isActive 
             ? 'bg-primary-blue text-white shadow-lg shadow-primary-blue/20 cursor-pointer hover:bg-primary-hover active:scale-95' 
             : 'bg-[#1e2c41] text-gray-400 cursor-not-allowed'
